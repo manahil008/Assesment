@@ -2,7 +2,7 @@
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Workshop & Event Dashboard</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,32 +14,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-full flex flex-col antialiased selection:bg-blue-500 selection:text-white">
+<body class="min-h-full flex flex-col antialiased selection:bg-blue-500 selection:text-white bg-slate-50 text-slate-900">
 
-<header class="sticky top-0 z-30 bg-white/80 border-b border-slate-200 transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-        <div class="flex items-center justify-between gap-4">
+<header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex items-center justify-between gap-3">
 
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 shrink-0">
-                    <i class="fa-solid font-bold fa-calendar-check text-xl"></i>
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 shrink-0">
+                    <i class="fa-solid font-bold fa-calendar-check text-lg sm:text-xl"></i>
                 </div>
-                <div>
-                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                <div class="min-w-0">
+                    <h1 class="text-lg sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent truncate">
                         EventPulse
                     </h1>
-                    <p class="text-xs text-slate-500 font-medium hidden sm:block">
+                    <p class="text-[11px] sm:text-xs text-slate-500 font-medium truncate hidden xs:block">
                         Workshop & Masterclass Hub
                     </p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div class="hidden md:flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold">
-                    <span class="text-slate-500">Total:</span>
+            <div class="flex items-center gap-2 shrink-0">
+                <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-100 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 text-xs font-semibold">
+                    <span class="text-slate-500 hidden xs:inline">Total:</span>
                     <span id="stat-total" class="text-blue-600 font-bold">0</span>
                     <span class="text-slate-300">|</span>
-                    <span class="text-slate-500">Showing:</span>
+                    <span class="text-slate-500 hidden xs:inline">Showing:</span>
                     <span id="stat-showing" class="text-emerald-600 font-bold">0</span>
                 </div>
             </div>
@@ -48,30 +48,29 @@
     </div>
 </header>
 
-<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
 
-    <section class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10">
+    <section class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-5 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10">
         <div class="space-y-1 max-w-2xl">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white backdrop-blur-sm mb-1">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-white/20 text-white backdrop-blur-sm mb-1">
               Explore & Upskill
             </span>
-            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+            <h2 class="text-xl sm:text-3xl font-bold tracking-tight">
                 Workshops & Tech Events
             </h2>
-            <p class="text-blue-100 text-sm sm:text-base opacity-90 leading-relaxed">
+            <p class="text-blue-100 text-xs sm:text-base opacity-90 leading-relaxed">
                 Discover hands-on masterclasses, live developer bootcamps, and executive roundtables.
             </p>
         </div>
-        <div class="flex items-center gap-2 self-start md:self-auto bg-white/10 backdrop-blur-md p-3 rounded-xl border border-white/20">
-            <i class="fa-solid fa-layer-group text-2xl text-blue-200"></i>
+        <div class="flex items-center gap-2 self-start md:self-auto bg-white/10 backdrop-blur-md p-2.5 sm:p-3 rounded-xl border border-white/20 shrink-0">
+            <i class="fa-solid fa-layer-group text-xl sm:text-2xl text-blue-200"></i>
             <div class="text-xs">
-                <p class="font-medium text-blue-200">Active Filters</p>
-                <p id="active-filter-indicator" class="font-bold text-white">All Events</p>
+                <p class="font-medium text-blue-200 text-[10px] sm:text-xs">Active Filter</p>
+                <p id="active-filter-indicator" class="font-bold text-white max-w-[180px] sm:max-w-xs truncate">All Events</p>
             </div>
         </div>
     </section>
-
-    <section class="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
+    <section class="bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 shadow-sm space-y-3.5">
 
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div class="relative flex-1">
@@ -81,10 +80,16 @@
                 <input
                         type="text"
                         id="search-input"
-                        placeholder="Search by title, organizer, or description..."
-                        class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        placeholder="Search title, organizer, or topic..."
+                        class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                        aria-label="Search workshops"
                 />
-                <button id="clear-search-btn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                <button
+                        id="clear-search-btn"
+                        type="button"
+                        aria-label="Clear search query"
+                        class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 min-w-[40px] justify-center"
+                >
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
@@ -93,37 +98,39 @@
                 <button
                         id="reset-filters-btn"
                         type="button"
-                        class="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-xl transition-colors flex items-center justify-center gap-2 focus:ring-2 focus:ring-slate-400"
+                        class="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 font-medium text-sm rounded-xl transition-colors flex items-center justify-center gap-2 focus:ring-2 focus:ring-slate-400 min-h-[44px]"
                 >
                     <i class="fa-solid fa-rotate-left text-xs"></i>
-                    Reset Filters
+                    <span>Reset Filters</span>
                 </button>
             </div>
         </div>
+        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 pt-3 border-t border-slate-100">
 
-        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 pt-2 border-t border-slate-100">
-            <div class="flex items-center gap-1.5 overflow-x-auto pb-2 lg:pb-0 scrollbar-none" id="status-pill-container">
-                <button data-status="All" class="status-btn active-status px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-blue-600 bg-blue-600 text-white">
-                    All Events
-                </button>
-                <button data-status="Upcoming" class="status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-circle-dot text-emerald-500 text-[10px] mr-1"></i> Upcoming
-                </button>
-                <button data-status="Completed" class="status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-check text-blue-500 text-[10px] mr-1"></i> Completed
-                </button>
-                <button data-status="Cancelled" class="status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-xmark text-rose-500 text-[10px] mr-1"></i> Cancelled
-                </button>
+            <div class="relative min-w-0">
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-2 lg:pb-0 scrollbar-thin touch-pan-x" id="status-pill-container" role="tablist" aria-label="Filter by status">
+                    <button data-status="All" role="tab" aria-selected="true" class="status-btn active-status min-h-[38px] px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-blue-600 bg-blue-600 text-white shadow-sm">
+                        All Events
+                    </button>
+                    <button data-status="Upcoming" role="tab" aria-selected="false" class="status-btn min-h-[38px] px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-circle-dot text-emerald-500 text-[10px] mr-1"></i> Upcoming
+                    </button>
+                    <button data-status="Completed" role="tab" aria-selected="false" class="status-btn min-h-[38px] px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-check text-blue-500 text-[10px] mr-1"></i> Completed
+                    </button>
+                    <button data-status="Cancelled" role="tab" aria-selected="false" class="status-btn min-h-[38px] px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-xmark text-rose-500 text-[10px] mr-1"></i> Cancelled
+                    </button>
+                </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <label for="category-select" class="text-xs font-semibold text-slate-500 whitespace-nowrap">
+            <div class="flex items-center gap-2 shrink-0">
+                <label for="category-select" class="text-xs font-semibold text-slate-500 whitespace-nowrap shrink-0">
                     Category:
                 </label>
                 <select
                         id="category-select"
-                        class="w-full lg:w-48 py-1.5 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+                        class="w-full lg:w-48 py-2 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer min-h-[40px]"
                 >
                     <option value="All">All Categories</option>
                 </select>
@@ -134,25 +141,26 @@
 
     <section
             id="events-grid"
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
             aria-live="polite"
     >
+
     </section>
 
-    <div id="no-results" class="hidden flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-2xl border border-dashed border-slate-300 space-y-4">
-        <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-2xl">
+    <div id="no-results" class="hidden flex-col items-center justify-center py-12 sm:py-16 px-4 text-center bg-white rounded-2xl border border-dashed border-slate-300 space-y-4">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-xl sm:text-2xl shrink-0">
             <i class="fa-solid fa-filter-circle-xmark"></i>
         </div>
         <div class="space-y-1 max-w-sm">
-            <h3 class="text-lg font-bold text-slate-800">No matching workshops found</h3>
-            <p class="text-sm text-slate-500">
+            <h3 class="text-base sm:text-lg font-bold text-slate-800">No matching workshops found</h3>
+            <p class="text-xs sm:text-sm text-slate-500">
                 We couldn't find any events matching your search criteria. Try adjusting your query or filters.
             </p>
         </div>
         <button
                 id="no-results-reset-btn"
                 type="button"
-                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-xl shadow-md transition-colors"
+                class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-xl shadow-md transition-colors min-h-[44px]"
         >
             Clear All Filters
         </button>
@@ -160,44 +168,45 @@
 
 </main>
 
-<div id="event-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all break-word-safe">
-        <div class="relative h-48 sm:h-56 bg-slate-200 shrink-0">
+
+<div id="event-modal" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="bg-white rounded-t-2xl sm:rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+        <div class="relative h-40 sm:h-56 bg-slate-200 shrink-0">
             <img id="modal-image" src="" alt="Event Detail" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
-            <button id="close-modal-btn" aria-label="Close modal" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-900/60 hover:bg-slate-900 text-white flex items-center justify-center backdrop-blur-md transition-all">
-                <i class="fa-solid fa-xmark"></i>
+            <button id="close-modal-btn" type="button" aria-label="Close modal" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white flex items-center justify-center backdrop-blur-md transition-all touch-manipulation">
+                <i class="fa-solid fa-xmark text-base"></i>
             </button>
-            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2 flex-wrap">
-                <span id="modal-category-badge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-600 text-white uppercase tracking-wider">Category</span>
-                <span id="modal-status-badge" class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">Status</span>
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 flex-wrap">
+                <span id="modal-category-badge" class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-600 text-white uppercase tracking-wider">Category</span>
+                <span id="modal-status-badge" class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider">Status</span>
             </div>
         </div>
-        <div class="p-6 overflow-y-auto space-y-5 flex-1">
+        <div class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
             <div>
-                <h2 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug break-word-safe">Event Title</h2>
-                <div class="flex items-center gap-4 mt-2 text-xs text-slate-500 flex-wrap">
+                <h2 id="modal-title" class="text-lg sm:text-2xl font-extrabold text-slate-900 leading-snug break-word-safe">Event Title</h2>
+                <div class="flex items-center gap-3 sm:gap-4 mt-2 text-xs text-slate-500 flex-wrap">
                     <span class="flex items-center gap-1.5 font-medium"><i class="fa-regular fa-calendar text-blue-500"></i><span id="modal-date">Date</span></span>
-                    <span class="flex items-center gap-1.5 font-medium"><i class="fa-solid fa-user-tie text-blue-500"></i><span id="modal-organizer">Organizer</span></span>
+                    <span class="flex items-center gap-1.5 font-medium min-w-0"><i class="fa-solid fa-user-tie text-blue-500 shrink-0"></i><span id="modal-organizer" class="truncate">Organizer</span></span>
                 </div>
             </div>
-            <div class="border-t border-b border-slate-100 py-4 space-y-2">
+            <div class="border-t border-b border-slate-100 py-3 sm:py-4 space-y-2">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">About Workshop</h3>
-                <p id="modal-description" class="text-sm text-slate-600 leading-relaxed break-word-safe">Detailed description...</p>
+                <p id="modal-description" class="text-xs sm:text-sm text-slate-600 leading-relaxed break-word-safe">Detailed description...</p>
             </div>
         </div>
-        <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3 shrink-0">
-            <button id="modal-add-calendar-btn" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 transition-all flex items-center gap-1.5">
-                <i class="fa-regular fa-calendar-plus"></i> Add to Calendar
+        <div class="p-3 sm:p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-2 sm:gap-3 shrink-0">
+            <button id="modal-add-calendar-btn" type="button" class="flex-1 sm:flex-none px-3.5 py-2.5 text-xs font-semibold rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 transition-all flex items-center justify-center gap-1.5 min-h-[40px]">
+                <i class="fa-regular fa-calendar-plus"></i> <span class="hidden xs:inline">Add to</span> Calendar
             </button>
-            <button id="modal-rsvp-btn" class="px-5 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-md shadow-blue-500/20 flex items-center gap-1.5">
-                <i class="fa-solid fa-ticket"></i> Register / RSVP
+            <button id="modal-rsvp-btn" type="button" class="flex-1 sm:flex-none px-4 py-2.5 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5 min-h-[40px]">
+                <i class="fa-solid fa-ticket"></i> Register
             </button>
         </div>
     </div>
 </div>
 
-<footer class="mt-auto border-t border-slate-200 py-6 bg-white text-xs text-slate-500 text-center">
+<footer class="mt-auto border-t border-slate-200 py-5 bg-white text-xs text-slate-500 text-center">
     <div class="max-w-7xl mx-auto px-4">
         <p>© 2026 EventPulse Hub. Built for interactive tech workshops and developer masterclasses.</p>
     </div>
