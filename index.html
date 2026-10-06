@@ -20,7 +20,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
         <div class="flex items-center justify-between gap-4">
 
-            <!-- Logo & App Title -->
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 shrink-0">
                     <i class="fa-solid font-bold fa-calendar-check text-xl"></i>
@@ -35,7 +34,6 @@
                 </div>
             </div>
 
-            <!-- Quick Stats Counter -->
             <div class="flex items-center gap-3">
                 <div class="hidden md:flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold">
                     <span class="text-slate-500">Total:</span>
@@ -52,7 +50,6 @@
 
 <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
 
-    <!-- Dashboard Title Banner -->
     <section class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 sm:p-8 rounded-2xl shadow-xl shadow-blue-500/10">
         <div class="space-y-1 max-w-2xl">
             <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white backdrop-blur-sm mb-1">
@@ -65,71 +62,130 @@
                 Discover hands-on masterclasses, live developer bootcamps, and executive roundtables.
             </p>
         </div>
+        <div class="flex items-center gap-2 self-start md:self-auto bg-white/10 backdrop-blur-md p-3 rounded-xl border border-white/20">
+            <i class="fa-solid fa-layer-group text-2xl text-blue-200"></i>
+            <div class="text-xs">
+                <p class="font-medium text-blue-200">Active Filters</p>
+                <p id="active-filter-indicator" class="font-bold text-white">All Events</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Events Grid Container -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div class="relative flex-1">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                </div>
+                <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search by title, organizer, or description..."
+                        class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                />
+                <button id="clear-search-btn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button
+                        id="reset-filters-btn"
+                        type="button"
+                        class="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-xl transition-colors flex items-center justify-center gap-2 focus:ring-2 focus:ring-slate-400"
+                >
+                    <i class="fa-solid fa-rotate-left text-xs"></i>
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 pt-2 border-t border-slate-100">
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-2 lg:pb-0 scrollbar-none" id="status-pill-container">
+                <button data-status="All" class="status-btn active-status px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-blue-600 bg-blue-600 text-white">
+                    All Events
+                </button>
+                <button data-status="Upcoming" class="status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-circle-dot text-emerald-500 text-[10px] mr-1"></i> Upcoming
+                </button>
+                <button data-status="Completed" class="status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-check text-blue-500 text-[10px] mr-1"></i> Completed
+                </button>
+                <button data-status="Cancelled" class="status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-xmark text-rose-500 text-[10px] mr-1"></i> Cancelled
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <label for="category-select" class="text-xs font-semibold text-slate-500 whitespace-nowrap">
+                    Category:
+                </label>
+                <select
+                        id="category-select"
+                        class="w-full lg:w-48 py-1.5 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+                >
+                    <option value="All">All Categories</option>
+                </select>
+            </div>
+        </div>
+
+    </section>
+
     <section
             id="events-grid"
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             aria-live="polite"
     >
-        <!-- Cards rendered dynamically via JavaScript -->
     </section>
+
+    <div id="no-results" class="hidden flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-2xl border border-dashed border-slate-300 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-2xl">
+            <i class="fa-solid fa-filter-circle-xmark"></i>
+        </div>
+        <div class="space-y-1 max-w-sm">
+            <h3 class="text-lg font-bold text-slate-800">No matching workshops found</h3>
+            <p class="text-sm text-slate-500">
+                We couldn't find any events matching your search criteria. Try adjusting your query or filters.
+            </p>
+        </div>
+        <button
+                id="no-results-reset-btn"
+                type="button"
+                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-xl shadow-md transition-colors"
+        >
+            Clear All Filters
+        </button>
+    </div>
 
 </main>
 
-<!-- Event Details Modal -->
 <div id="event-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all break-word-safe">
-
-        <!-- Modal Header Banner -->
         <div class="relative h-48 sm:h-56 bg-slate-200 shrink-0">
             <img id="modal-image" src="" alt="Event Detail" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
-
-            <!-- Close Modal Button -->
             <button id="close-modal-btn" aria-label="Close modal" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-900/60 hover:bg-slate-900 text-white flex items-center justify-center backdrop-blur-md transition-all">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-
-            <!-- Category & Status Badge Overlay -->
             <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2 flex-wrap">
-                <span id="modal-category-badge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-600 text-white uppercase tracking-wider">
-                  Category
-                </span>
-                <span id="modal-status-badge" class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
-                  Status
-                </span>
+                <span id="modal-category-badge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-600 text-white uppercase tracking-wider">Category</span>
+                <span id="modal-status-badge" class="px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">Status</span>
             </div>
         </div>
-
-        <!-- Modal Content Body -->
         <div class="p-6 overflow-y-auto space-y-5 flex-1">
             <div>
-                <h2 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug break-word-safe">
-                    Event Title
-                </h2>
+                <h2 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug break-word-safe">Event Title</h2>
                 <div class="flex items-center gap-4 mt-2 text-xs text-slate-500 flex-wrap">
-                    <span class="flex items-center gap-1.5 font-medium">
-                      <i class="fa-regular fa-calendar text-blue-500"></i>
-                      <span id="modal-date">Date</span>
-                    </span>
-                    <span class="flex items-center gap-1.5 font-medium">
-                      <i class="fa-solid fa-user-tie text-blue-500"></i>
-                      <span id="modal-organizer">Organizer</span>
-                    </span>
+                    <span class="flex items-center gap-1.5 font-medium"><i class="fa-regular fa-calendar text-blue-500"></i><span id="modal-date">Date</span></span>
+                    <span class="flex items-center gap-1.5 font-medium"><i class="fa-solid fa-user-tie text-blue-500"></i><span id="modal-organizer">Organizer</span></span>
                 </div>
             </div>
-
             <div class="border-t border-b border-slate-100 py-4 space-y-2">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">About Workshop</h3>
-                <p id="modal-description" class="text-sm text-slate-600 leading-relaxed break-word-safe">
-                    Detailed description...
-                </p>
+                <p id="modal-description" class="text-sm text-slate-600 leading-relaxed break-word-safe">Detailed description...</p>
             </div>
         </div>
-
-        <!-- Modal Footer Action Bar -->
         <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3 shrink-0">
             <button id="modal-add-calendar-btn" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 transition-all flex items-center gap-1.5">
                 <i class="fa-regular fa-calendar-plus"></i> Add to Calendar
@@ -138,7 +194,6 @@
                 <i class="fa-solid fa-ticket"></i> Register / RSVP
             </button>
         </div>
-
     </div>
 </div>
 

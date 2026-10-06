@@ -51,10 +51,25 @@ const mockEventsData = [
     }
 ];
 
+const state = {
+    events: [...mockEventsData],
+    searchQuery: "",
+    selectedStatus: "All",
+    selectedCategory: "All"
+};
+
 const elements = {
     eventsGrid: document.getElementById('events-grid'),
+    noResults: document.getElementById('no-results'),
+    searchInput: document.getElementById('search-input'),
+    clearSearchBtn: document.getElementById('clear-search-btn'),
+    resetFiltersBtn: document.getElementById('reset-filters-btn'),
+    noResultsResetBtn: document.getElementById('no-results-reset-btn'),
+    statusContainer: document.getElementById('status-pill-container'),
+    categorySelect: document.getElementById('category-select'),
     statTotal: document.getElementById('stat-total'),
     statShowing: document.getElementById('stat-showing'),
+    activeFilterIndicator: document.getElementById('active-filter-indicator'),
     modal: document.getElementById('event-modal'),
     modalTitle: document.getElementById('modal-title'),
     modalImage: document.getElementById('modal-image'),
@@ -65,6 +80,29 @@ const elements = {
     modalDescription: document.getElementById('modal-description'),
     closeModalBtn: document.getElementById('close-modal-btn')
 };
+
+function getFilteredEvents() {
+    const query = state.searchQuery.trim().toLowerCase();
+
+    return state.events.filter(event => {
+        const matchesSearch = !query ||
+            event.title.toLowerCase().includes(query) ||
+            event.organizer.toLowerCase().includes(query) ||
+            event.description.toLowerCase().includes(query);
+
+        const matchesStatus = state.selectedStatus === 'All' || event.status === state.selectedStatus;
+        const matchesCategory = state.selectedCategory === 'All' || event.category === state.selectedCategory;
+
+        return matchesSearch && matchesStatus && matchesCategory;
+    });
+}
+
+function initializeCategoryFilter() {
+    const categories = ['All', ...new Set(state.events.map(e => e.category))];
+    elements.categorySelect.innerHTML = categories.map(cat =>
+        `<option value="${cat}">${cat === 'All' ? 'All Categories' : cat}</option>`
+    ).join('');
+}
 
 function getStatusBadgeStyle(status) {
     switch (status) {
@@ -86,10 +124,27 @@ function formatDate(dateStr) {
 }
 
 function renderEvents() {
-    elements.statTotal.textContent = mockEventsData.length;
-    elements.statShowing.textContent = mockEventsData.length;
+    const filteredEvents = getFilteredEvents();
 
-    elements.eventsGrid.innerHTML = mockEventsData.map(event => {
+    elements.statTotal.textContent = state.events.length;
+    elements.statShowing.textContent = filteredEvents.length;
+
+    let filterDesc = state.selectedStatus;
+    if (state.selectedCategory !== 'All') filterDesc += ` • ${state.selectedCategory}`;
+    if (state.searchQuery) filterDesc += ` • "${state.searchQuery}"`;
+    elements.activeFilterIndicator.textContent = filterDesc;
+
+    if (filteredEvents.length === 0) {
+        elements.eventsGrid.innerHTML = '';
+        elements.noResults.classList.remove('hidden');
+        elements.noResults.classList.add('flex');
+        return;
+    } else {
+        elements.noResults.classList.add('hidden');
+        elements.noResults.classList.remove('flex');
+    }
+
+    elements.eventsGrid.innerHTML = filteredEvents.map(event => {
         const statusBadgeClass = getStatusBadgeStyle(event.status);
 
         return `
@@ -152,7 +207,7 @@ function renderEvents() {
 }
 
 window.openModal = function(id) {
-    const event = mockEventsData.find(e => e.id === id);
+    const event = state.events.find(e => e.id === id);
     if (!event) return;
 
     elements.modalTitle.textContent = event.title;
@@ -174,7 +229,66 @@ function closeModal() {
     document.body.style.overflow = '';
 }
 
+function resetAllFilters() {
+    state.searchQuery = "";
+    state.selectedStatus = "All";
+    state.selectedCategory = "All";
+
+    elements.searchInput.value = "";
+    elements.clearSearchBtn.classList.add('hidden');
+    elements.categorySelect.value = "All";
+
+    document.querySelectorAll('.status-btn').forEach(btn => {
+        if (btn.dataset.status === 'All') {
+            btn.className = 'status-btn active-status px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-blue-600 bg-blue-600 text-white';
+        } else {
+            btn.className = 'status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100';
+        }
+    });
+
+    renderEvents();
+}
+
 function setupEventListeners() {
+    elements.searchInput.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        if (state.searchQuery.length > 0) {
+            elements.clearSearchBtn.classList.remove('hidden');
+        } else {
+            elements.clearSearchBtn.classList.add('hidden');
+        }
+        renderEvents();
+    });
+
+    elements.clearSearchBtn.addEventListener('click', () => {
+        state.searchQuery = "";
+        elements.searchInput.value = "";
+        elements.clearSearchBtn.classList.add('hidden');
+        renderEvents();
+    });
+
+    elements.resetFiltersBtn.addEventListener('click', resetAllFilters);
+    elements.noResultsResetBtn.addEventListener('click', resetAllFilters);
+
+    elements.statusContainer.addEventListener('click', (e) => {
+        const targetBtn = e.target.closest('.status-btn');
+        if (!targetBtn) return;
+
+        state.selectedStatus = targetBtn.dataset.status;
+
+        document.querySelectorAll('.status-btn').forEach(btn => {
+            btn.className = 'status-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100';
+        });
+        targetBtn.className = 'status-btn active-status px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border border-blue-600 bg-blue-600 text-white';
+
+        renderEvents();
+    });
+
+    elements.categorySelect.addEventListener('change', (e) => {
+        state.selectedCategory = e.target.value;
+        renderEvents();
+    });
+
     elements.closeModalBtn.addEventListener('click', closeModal);
     elements.modal.addEventListener('click', (e) => {
         if (e.target === elements.modal) closeModal();
@@ -182,6 +296,7 @@ function setupEventListeners() {
 }
 
 window.onload = function() {
+    initializeCategoryFilter();
     setupEventListeners();
     renderEvents();
 };
